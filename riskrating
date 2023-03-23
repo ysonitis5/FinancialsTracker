@@ -3,7 +3,11 @@ import pandas as pd
 import yfinance as yf
 
 # Read the CSV file
-stocks = pd.read_csv('stocks_with_high_dividend_yield.csv')
+csv_file = 'dividend_yields.csv'
+data = pd.read_csv(csv_file)
+
+# Filter stocks with a dividend yield of 7% or higher
+stocks = data[data['Dividend Yield'] >= 7]
 
 # Define weights for each factor
 weights = {
