@@ -5,3 +5,5 @@ So far a simple financial application. Current;y can display both Net Worth and 
 ****************
 Plan to add an update button to fetch the current price of stocks in our investment portfolio to update networth in real time.
 Cashflow tracker adjustable by multiple time frames.
+*****************
+3/23/23 - Added s&p500 dividend yield report.
