@@ -6,7 +6,7 @@ import csv
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-API_KEY = 'YPCB03WQ01EIH8U2'
+API_KEY = 'api_key'
 
 def get_sp500_symbols():
     url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
