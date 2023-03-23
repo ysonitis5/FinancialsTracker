@@ -1,0 +1,52 @@
+import csv
+import pandas as pd
+import yfinance as yf
+
+# Read the CSV file
+stocks = pd.read_csv('stocks_with_high_dividend_yield.csv')
+
+# Define weights for each factor
+weights = {
+    "beta": 0.1,
+    "pe_ratio": 0.15,
+    "pb_ratio": 0.15,
+    "current_ratio": 0.15,
+    "profit_margin": 0.15,
+    "roe": 0.3
+}
+
+# Function to calculate the risk rating
+def calculate_risk_rating(stock_data, weights):
+    risk_rating = 0
+
+    # Calculate risk rating based on the factors and their weights
+    for factor, weight in weights.items():
+        risk_rating += stock_data[factor] * weight
+
+    return risk_rating
+
+# Fetch financial data and calculate risk ratings
+for index, row in stocks.iterrows():
+    symbol = row['Symbol']
+
+    # Fetch financial data using yfinance
+    stock_info = yf.Ticker(symbol).info
+
+    # Extract the required financial data
+    stock_data = {
+        "beta": stock_info.get("beta"),
+        "pe_ratio": stock_info.get("trailingPE"),
+        "pb_ratio": stock_info.get("priceToBook"),
+        "current_ratio": stock_info.get("currentRatio"),
+        "profit_margin": stock_info.get("profitMargins"),
+        "roe": stock_info.get("returnOnEquity")
+    }
+
+    # Calculate the risk rating
+    risk_rating = calculate_risk_rating(stock_data, weights)
+
+    # Add the risk rating to the DataFrame
+    stocks.loc[index, 'Risk Rating'] = risk_rating
+
+# Save the updated DataFrame to a new CSV file
+stocks.to_csv('stocks_with_high_dividend_yield_and_risk_ratings.csv', index=False)
